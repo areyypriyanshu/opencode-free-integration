@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.user.opencode-model-bridge</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/node</string>
+        <string>/PATH/TO/opencode-free-integration/src/server.mjs</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/PATH/TO/opencode-free-integration</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PORT</key>
+        <string>4201</string>
+        <key>HOST</key>
+        <string>127.0.0.1</string>
+        <key>OPENCODE_BIN</key>
+        <string>/Applications/OpenCode.app/Contents/Resources/opencode-cli</string>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/opencode-bridge.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/opencode-bridge.log</string>
+
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>
