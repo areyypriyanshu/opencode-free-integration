@@ -55,6 +55,24 @@ curl http://127.0.0.1:4201/v1/models   # should list the free models
 > launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.opencode-model-bridge.plist
 > ```
 
+
+> **Windows?** No launchd. You have two easy options:
+>
+> - **Per-session:** run the bridge in a terminal window and keep it open:
+>   ```bat
+>   node src\server.mjs
+>   ```
+> - **Auto-start (Task Scheduler):** create a scheduled task that runs
+>   `node` with the bridge script at logon, or add the same command to
+>   `shell:startup` so it starts when you log in.
+>
+> On Windows the OpenCode CLI path differs (find it with `where opencode`).
+> Point the bridge at it:
+> ```bat
+> set OPENCODE_BIN=C:\path\to\opencode.exe
+> node src\server.mjs
+> ```
+
 ### 3. Add a credential placeholder in DeepSeek Harness
 
 Open `~/.dsh/.credentials.yaml` and add one line under `refs:` (the bridge is
@@ -68,8 +86,12 @@ refs:
 ### 4. Add the model route in DeepSeek Harness
 
 Open `~/.dsh/profiles/desktop/cordis.patch.yml` and add a provider to the
-`llm-pi-ai` section. Start with a couple of models — you can add more later from
-`/v1/models`:
+`llm-pi-ai` section. To get **every** available model (and keep them current as OpenCode
+adds or removes models), use DSH's **"Fetch models"** action on this route —
+it reads the bridge's `/v1/models` and imports the whole live list. That way
+you don't maintain the list by hand.
+
+Or start with a couple by hand:
 
 ```yaml
 - id: llm-pi-ai
